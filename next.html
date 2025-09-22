@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>boyfriend</title>
+  <style>
+    body {
+      background-color: white;
+      color: black;
+      font-family: monospace;
+      font-size: 24px;
+      text-align: center;
+      padding-top: 100px;
+      transition: background-color 2s ease, color 2s ease;
+    }
+    #message {
+      margin-bottom: 20px;
+      white-space: pre-line;
+    }
+    #timer {
+      font-size: 30px;
+      margin-top: 20px;
+      display: none;
+    }
+    /* center the image horizontally by using auto left/right margins.
+       The JS sets photo.style.display = "block" when revealing, so the
+       image will be a block-level element and margin:auto will center it. */
+    #photo {
+      margin: 30px auto 0;
+      display: none;
+      max-width: 300px;
+      height: auto;
+    }
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background-color: currentColor;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="message">I knew it.</div>
+  <div id="timer"></div>
+  <!-- 👇 Replace 'shrekk.gif' with your own image file -->
+  <img id="photo" src="shrekk.gif" alt="Your Boyfriend">
+
+  <script>
+    const msg = document.getElementById("message");
+    const timerEl = document.getElementById("timer");
+    const photo = document.getElementById("photo");
+
+    // Step 1 → after 2 sec switch theme
+    setTimeout(() => {
+      document.body.style.backgroundColor = "black";
+      document.body.style.color = "#00ff00";
+      // Step 2 → show typing text
+      setTimeout(() => typeText("searching for your boyfriend's photo..."), 1500);
+    }, 2000);
+
+    // Function to type text like hacker effect
+    function typeText(text) {
+      msg.textContent = "";
+      let i = 0;
+      let typer = setInterval(() => {
+        msg.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(typer);
+          startCountdown();
+        }
+      }, 60);
+    }
+
+    // Step 3 → countdown
+    function startCountdown() {
+      let time = 5;
+      timerEl.style.display = "block";
+      timerEl.textContent = `Revealing in ${time}...`;
+      let count = setInterval(() => {
+        time--;
+        timerEl.textContent = `Revealing in ${time}...`;
+        if (time <= 0) {
+          clearInterval(count);
+          revealPhoto();
+        }
+      }, 1000);
+    }
+
+    // Step 4 → show Shrek
+    function revealPhoto() {
+      timerEl.style.display = "none";
+      photo.style.display = "block"; // becomes block so margin:auto centers it
+      msg.textContent = "Here He is.. 😂";
+    }
+  </script>
+</body>
+</html>
